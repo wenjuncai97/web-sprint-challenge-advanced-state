@@ -42,9 +42,9 @@ export function Quiz(props) {
 
 const mapStateToProps = state => {
   return {
-    selectAnswer: state.selectAnswer,
-
+    quiz: state.quiz,
+    selectedAnswer: state.selectedAnswer
   }
 }
 
-export default connect(mapStateToProps, {fetchQuiz})(Quiz);
+export default connect(mapStateToProps, {fetchQuiz, postAnswer, selectAnswer})(Quiz);
