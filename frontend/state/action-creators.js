@@ -30,17 +30,23 @@ export function setQuiz(quiz) {
   return {type: SET_QUIZ_INTO_STATE, payload: quiz}
 }
 
-export function inputChange(value) { 
-  return {type: INPUT_CHANGE}
+export function inputChange(change) { 
+  return {type: INPUT_CHANGE, payload: change}
 }
 
 export function resetForm() {
   return {type: RESET_FORM}
  }
 
-// ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
+    axios.get(`http://localhost:9000/api/quiz/next`)
+    .then(res => {
+      console.log(res)
+      dispatch(setQuiz(res.data))
+    })
+    .catch(err => 
+      console.error(err))
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state

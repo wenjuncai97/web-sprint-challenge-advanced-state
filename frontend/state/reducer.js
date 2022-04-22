@@ -10,12 +10,33 @@ import {
   RESET_FORM,
 } from "./action-types";
 
+
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
-  return state
+  switch(action.type) {
+    case(MOVE_CLOCKWISE):
+      if(state === 5) {
+        return (state = 0)
+      } else {
+        return state + 1
+      }
+    case(MOVE_COUNTERCLOCKWISE):
+      if(state === 0) {
+        return (state = 5)
+      } else {
+        return state - 1
+      }
+      default:
+        return state;
+  }
 }
 
-const initialQuizState = null
+const initialQuizState = {
+  quiz_id: '',
+  question: '',
+  answers: '',
+  selectedAnswer: ''
+}
 function quiz(state = initialQuizState, action) {
   return state
 }
