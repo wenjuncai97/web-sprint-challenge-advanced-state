@@ -1,5 +1,6 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
+
 import {
   SET_QUIZ_INTO_STATE,
   SET_INFO_MESSAGE,
@@ -13,53 +14,49 @@ import {
 
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
-  switch(action.type) {
-    case(MOVE_CLOCKWISE):
-      if(state === 5) {
+  switch (action.type) {
+    case (MOVE_CLOCKWISE):
+      if (state === 5) {
         return (state = 0)
       } else {
         return state + 1
       }
-    case(MOVE_COUNTERCLOCKWISE):
-      if(state === 0) {
+    case (MOVE_COUNTERCLOCKWISE):
+      if (state === 0) {
         return (state = 5)
       } else {
         return state - 1
       }
-      default:
-        return state;
+    default:
+      return state;
   }
 }
 
-const initialQuizState = {
-  quiz_id: '',
-  question: '',
-  answers: '',
-  selectedAnswer: ''
-}
-function quiz(state = initialQuizState, action) {
-  switch(action.type) {
-    case(SET_QUIZ_INTO_STATE):
-      return action.payload;
-    default:
-  return state
-}
-}
+const initialQuizState = "";
 
-const initialSelectedAnswerState = null
-function selectedAnswer(state = initialSelectedAnswerState, action) {
-  switch(action.type) {
-    case(SET_SELECTED_ANSWER):
+function quiz(state = initialQuizState, action) {
+  switch (action.type) {
+    case (SET_QUIZ_INTO_STATE):
       return action.payload;
     default:
       return state;
+  }
 }
+
+const initialSelectedAnswerState = "";
+function selectedAnswer(state = initialSelectedAnswerState, action) {
+  switch (action.type) {
+    case (SET_SELECTED_ANSWER):
+      return action.payload;
+    default:
+      return state;
+  }
 }
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
-  switch(action.type) {
-    case(SET_INFO_MESSAGE):
+  switch (action.type) {
+    case (SET_INFO_MESSAGE):
       return action.payload;
     default:
       return state;
