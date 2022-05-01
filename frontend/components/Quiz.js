@@ -61,7 +61,6 @@ const mapStateToProps = state => {
     quiz: state.quiz,
     selectedAnswer: state.selectedAnswer,
     answer_id: state.answer_id
-    
   }
 }
 

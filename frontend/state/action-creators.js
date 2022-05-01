@@ -11,46 +11,46 @@ import {
 
 
 export function moveClockwise() {
-  return {type: MOVE_CLOCKWISE}
- }
+  return { type: MOVE_CLOCKWISE }
+}
 
 export function moveCounterClockwise() {
-  return {type: MOVE_COUNTERCLOCKWISE}
- }
+  return { type: MOVE_COUNTERCLOCKWISE }
+}
 
 export function selectAnswer(id) {
-  return {type: SET_SELECTED_ANSWER, payload: id}
- }
-
-export function setMessage(message) { 
-  return {type: SET_INFO_MESSAGE, payload: message}
+  return { type: SET_SELECTED_ANSWER, payload: id }
 }
 
-export function setQuiz(quiz) { 
-  return {type: SET_QUIZ_INTO_STATE, payload: quiz}
+export function setMessage(message) {
+  return { type: SET_INFO_MESSAGE, payload: message }
 }
 
-export function inputChange(change) { 
-  return {type: INPUT_CHANGE, payload: change}
+export function setQuiz(quiz) {
+  return { type: SET_QUIZ_INTO_STATE, payload: quiz }
+}
+
+export function inputChange(change) {
+  return { type: INPUT_CHANGE, payload: change }
 }
 
 export function resetForm() {
-  return {type: RESET_FORM}
- }
+  return { type: RESET_FORM }
+}
 
 export function fetchQuiz() {
   return function (dispatch) {
     axios.get(`http://localhost:9000/api/quiz/next`)
-    .then(res => {
-      dispatch(setQuiz(res.data))
-    })
-    .catch(err => 
-      console.error(err))
+      .then(res => {
+        dispatch(setQuiz(res.data))
+      })
+      .catch(err =>
+        console.error(err))
   }
 }
-export function postAnswer({quiz_id, answer_id}) {
+export function postAnswer({ quiz_id, answer_id }) {
   return function (dispatch) {
-    axios.post(`http://localhost:9000/api/quiz/answer`, {quiz_id, answer_id})
+    axios.post(`http://localhost:9000/api/quiz/answer`, { quiz_id, answer_id })
       .then(res => {
         dispatch(fetchQuiz());
         dispatch(setMessage(res.data.message))
@@ -60,18 +60,17 @@ export function postAnswer({quiz_id, answer_id}) {
       })
   }
 }
-export function postQuiz() {
+
+export function postQuiz({ question_text, true_answer_text, false_answer_text }) {
   return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
-    axios.post(`http://localhost:9000/api/quiz/new`, {question_text, true_answer_text, false_answer_text})
+    axios.post(`http://localhost:9000/api/quiz/new`, { question_text, true_answer_text, false_answer_text })
       .then(res => {
-        dispatch(setMessage(`Thank you! "${res.data.question}" is now added to the quiz.`)
+        dispatch(setMessage(`Congrats: "${res.data.question}" is a great question!`)
         );
         dispatch(resetForm());
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err)
+      });
   }
 }
-// ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
